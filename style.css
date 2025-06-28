@@ -1,0 +1,194 @@
+@font-face {
+  font-family: 'LeBeauneNew';
+  src: url("https://db.onlinewebfonts.com/t/9f4965a37ac189de7844a4c13c7108f5.woff2") format("woff2"),
+       url("https://db.onlinewebfonts.com/t/9f4965a37ac189de7844a4c13c7108f5.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #162237;
+  font-family: 'LeBeauneNew', sans-serif;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+h1 {
+  color: #f15f24;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.instruction {
+  font-family: 'Times New Roman', Times, serif;
+  color: #86dabd;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.drag-bank {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  min-height: 150px; /* ensures consistent height */
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  border: 2px dashed #86dabd;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+
+.draggable-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  cursor: grab;
+  user-select: none;
+}
+
+.draggable-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.label {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 0.8rem;
+  color: #86dabd;
+  margin-top: 0.3rem;
+  text-align: center;
+}
+
+/* Updated drop zone layout */
+.circle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 3rem 1rem 5rem;
+  overflow: visible;
+  position: relative;
+}
+
+.drop-zone-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.drop-zone {
+  border: 2px solid #86dabd;
+  border-radius: 50%;
+  background-color: transparent;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Gradually increasing sizes */
+.drop-zone-wrapper:nth-child(1) .drop-zone { width: 80px; height: 80px; }
+.drop-zone-wrapper:nth-child(2) .drop-zone { width: 100px; height: 100px; }
+.drop-zone-wrapper:nth-child(3) .drop-zone { width: 120px; height: 120px; }
+.drop-zone-wrapper:nth-child(4) .drop-zone { width: 140px; height: 140px; }
+.drop-zone-wrapper:nth-child(5) .drop-zone { width: 160px; height: 160px; }
+.drop-zone-wrapper:nth-child(6) .drop-zone { width: 180px; height: 180px; }
+.drop-zone-wrapper:nth-child(7) .drop-zone { width: 200px; height: 200px; }
+.drop-zone-wrapper:nth-child(8) .drop-zone { width: 220px; height: 220px; }
+
+.drop-zone img {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.external-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.4rem;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 0.85rem;
+  color: #86dabd;
+  text-align: center;
+  pointer-events: none;
+  width: 100px;            /* fixed width */
+  white-space: normal;     /* allow wrapping */
+  word-wrap: break-word;   /* break long lines */
+}
+
+
+.check-button {
+  padding: 0.6rem 1.2rem;
+  background-color: #f15f24;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+/* Splash screen styling (optional improvement) */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(22, 34, 55, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.splash-content {
+  background: #1f2e44;
+  padding: 2rem;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  max-width: 500px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Align all drop zones to share the same vertical center axis */
+.drop-zone-wrapper {
+  position: relative;
+}
+
+/* These offsets move the drop zones up based on half their height */
+.drop-zone-wrapper:nth-child(1) .drop-zone { margin-top: 70px; }  /* 40px circle -> offset by (180 - 40)/2 */
+.drop-zone-wrapper:nth-child(2) .drop-zone { margin-top: 60px; }  /* 60px */
+.drop-zone-wrapper:nth-child(3) .drop-zone { margin-top: 50px; }  /* 80px */
+.drop-zone-wrapper:nth-child(4) .drop-zone { margin-top: 40px; }  /* 100px */
+.drop-zone-wrapper:nth-child(5) .drop-zone { margin-top: 30px; }  /* 120px */
+.drop-zone-wrapper:nth-child(6) .drop-zone { margin-top: 20px; }  /* 140px */
+.drop-zone-wrapper:nth-child(7) .drop-zone { margin-top: 10px; }  /* 160px */
+.drop-zone-wrapper:nth-child(8) .drop-zone { margin-top: 0px; }   /* 180px = base */
