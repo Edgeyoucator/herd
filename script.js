@@ -1,3 +1,4 @@
+
 // STEP 1: Generate drop zones with built-in labels
 const circleRow = document.getElementById("circleRow");
 for (let i = 0; i < 8; i++) {
@@ -24,13 +25,8 @@ let originZoneWrapper = null;
 // Setup drag-and-drop
 function setupDraggables() {
   document.querySelectorAll('.draggable-wrapper').forEach(item => {
-    item.addEventListener('dragstart', (e) => {
+    item.addEventListener('dragstart', () => {
       draggedItem = item;
-
-      // iPad fix: prevent blown-up image preview
-      const img = new Image();
-      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR42mP8/w8AAwMCAO75X3wAAAAASUVORK5CYII=';
-      e.dataTransfer.setDragImage(img, 0, 0);
 
       // Store the original drop zone wrapper (if any)
       originZoneWrapper = [...document.querySelectorAll('.drop-zone-wrapper')].find(wrapper =>
@@ -119,10 +115,6 @@ function setupDraggables() {
       document.addEventListener('pointerup', upHandler);
     });
   });
-
-  // (rest of your drop zone listeners remain unchanged)
-}
-
 
   // Drop zones
   document.querySelectorAll('.drop-zone').forEach(zone => {
@@ -223,17 +215,17 @@ function showSplashScreen(success) {
   const splash = document.createElement("div");
   splash.id = "splash-screen";
   splash.innerHTML = success
-    ? `
+    ? 
       <div class="splash-content">
         <h2>🎉 Correct!</h2>
         <p>Your password is: <strong>order</strong></p>
         <p><em>Click anywhere to continue.</em></p>
-      </div>`
-    : `
+      </div>
+    : 
       <div class="splash-content">
         <h2>❌ Try Again</h2>
         <p>Check your order and adjust as needed.</p>
-      </div>`;
+      </div>;
 
   splash.addEventListener("click", () => splash.remove());
   document.body.appendChild(splash);
