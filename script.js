@@ -86,6 +86,12 @@ function setupDraggables() {
           if (existing) {
             bank.appendChild(existing);
             restoreDraggable(existing);
+            if (!existing.querySelector('.label')) {
+              const label = document.createElement('span');
+              label.classList.add('label');
+              label.textContent = existing.dataset.label;
+              existing.appendChild(label);
+            }
           }
           zone.appendChild(draggedItem);
           resizeDraggable(draggedItem, "100%");
@@ -135,6 +141,12 @@ function setupDraggables() {
         if (existing) {
           document.getElementById('dragBank').appendChild(existing);
           restoreDraggable(existing);
+          if (!existing.querySelector('.label')) {
+            const label = document.createElement('span');
+            label.classList.add('label');
+            label.textContent = existing.dataset.label;
+            existing.appendChild(label);
+          }
         }
 
         // Drop the dragged item
