@@ -1,4 +1,3 @@
-
 // STEP 1: Generate drop zones with built-in labels
 const circleRow = document.getElementById("circleRow");
 for (let i = 0; i < 8; i++) {
@@ -215,17 +214,17 @@ function showSplashScreen(success) {
   const splash = document.createElement("div");
   splash.id = "splash-screen";
   splash.innerHTML = success
-    ? 
+    ? `
       <div class="splash-content">
         <h2>🎉 Correct!</h2>
         <p>Your password is: <strong>order</strong></p>
         <p><em>Click anywhere to continue.</em></p>
-      </div>
-    : 
+      </div>`
+    : `
       <div class="splash-content">
         <h2>❌ Try Again</h2>
         <p>Check your order and adjust as needed.</p>
-      </div>;
+      </div>`;
 
   splash.addEventListener("click", () => splash.remove());
   document.body.appendChild(splash);
