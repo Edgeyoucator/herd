@@ -32,7 +32,6 @@ function setupDraggables() {
         wrapper.querySelector('.drop-zone').contains(draggedItem)
       );
 
-      // Ensure preview size is consistent when dragging from a drop zone
       if (originZoneWrapper) {
         restoreDraggable(draggedItem);
       }
@@ -53,6 +52,7 @@ function setupDraggables() {
       if (e.pointerType !== 'touch') return;
       e.preventDefault();
       draggedItem = item;
+
       originZoneWrapper = [...document.querySelectorAll('.drop-zone-wrapper')].find(wrapper =>
         wrapper.querySelector('.drop-zone').contains(draggedItem)
       );
@@ -84,26 +84,46 @@ function setupDraggables() {
         if (zone) {
           const existing = zone.querySelector('.draggable-wrapper');
           if (existing) {
-            bank.appendChild(existing);
+            document.getElementById('dragBank').appendChild(existing);
             restoreDraggable(existing);
+
+            // Clear external label from previous zone
+            const prevWrapper = existing.closest('.drop-zone-wrapper');
+            if (prevWrapper) {
+              const oldLabel = prevWrapper.querySelector('.external-label');
+              if (oldLabel) oldLabel.textContent = "";
+            }
+
+            // Restore internal label
+            if (!existing.querySelector('.label')) {
+              const label = document.createElement('span');
+              label.classList.add('label');
+              label.textContent = existing.dataset.label;
+              existing.appendChild(label);
+            }
           }
+
           zone.appendChild(draggedItem);
           resizeDraggable(draggedItem, "100%");
           const internal = draggedItem.querySelector('.label');
           if (internal) internal.remove();
+
           if (originZoneWrapper) {
             const oldLabel = originZoneWrapper.querySelector('.external-label');
             if (oldLabel) oldLabel.textContent = "";
           }
+
           const labelSpan = zone.parentElement.querySelector('.external-label');
           labelSpan.textContent = draggedItem.dataset.label;
         } else if (bank.contains(target)) {
           bank.appendChild(draggedItem);
           restoreDraggable(draggedItem);
+
           if (originZoneWrapper) {
             const label = originZoneWrapper.querySelector('.external-label');
             if (label) label.textContent = "";
           }
+
           if (!draggedItem.querySelector('.label')) {
             const label = document.createElement('span');
             label.classList.add('label');
@@ -130,28 +150,36 @@ function setupDraggables() {
 
     zone.addEventListener('drop', () => {
       if (draggedItem) {
-        // If replacing, restore the previous item
         const existing = zone.querySelector('.draggable-wrapper');
         if (existing) {
           document.getElementById('dragBank').appendChild(existing);
           restoreDraggable(existing);
+
+          const prevWrapper = existing.closest('.drop-zone-wrapper');
+          if (prevWrapper) {
+            const oldLabel = prevWrapper.querySelector('.external-label');
+            if (oldLabel) oldLabel.textContent = "";
+          }
+
+          if (!existing.querySelector('.label')) {
+            const label = document.createElement('span');
+            label.classList.add('label');
+            label.textContent = existing.dataset.label;
+            existing.appendChild(label);
+          }
         }
 
-        // Drop the dragged item
         zone.appendChild(draggedItem);
         resizeDraggable(draggedItem, "100%");
 
-        // Remove internal label
         const internal = draggedItem.querySelector('.label');
         if (internal) internal.remove();
 
-        // Clear old label from original zone if it existed
         if (originZoneWrapper) {
           const oldLabel = originZoneWrapper.querySelector('.external-label');
           if (oldLabel) oldLabel.textContent = "";
         }
 
-        // Update current label
         const labelSpan = zone.parentElement.querySelector('.external-label');
         labelSpan.textContent = draggedItem.dataset.label;
       }
@@ -167,13 +195,11 @@ function setupDraggables() {
       bank.appendChild(draggedItem);
       restoreDraggable(draggedItem);
 
-      // Clear external label from original drop zone if applicable
       if (originZoneWrapper) {
         const label = originZoneWrapper.querySelector('.external-label');
         if (label) label.textContent = "";
       }
 
-      // Restore internal label
       if (!draggedItem.querySelector('.label')) {
         const label = document.createElement('span');
         label.classList.add('label');
