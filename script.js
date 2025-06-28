@@ -32,6 +32,11 @@ function setupDraggables() {
         wrapper.querySelector('.drop-zone').contains(draggedItem)
       );
 
+      // Ensure preview size is consistent when dragging from a drop zone
+      if (originZoneWrapper) {
+        restoreDraggable(draggedItem);
+      }
+
       setTimeout(() => {
         item.style.display = 'none';
       }, 0);
@@ -51,6 +56,10 @@ function setupDraggables() {
       originZoneWrapper = [...document.querySelectorAll('.drop-zone-wrapper')].find(wrapper =>
         wrapper.querySelector('.drop-zone').contains(draggedItem)
       );
+
+      if (originZoneWrapper) {
+        restoreDraggable(draggedItem);
+      }
 
       const rect = item.getBoundingClientRect();
       const offsetX = e.clientX - rect.left;
