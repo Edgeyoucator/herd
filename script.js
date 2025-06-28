@@ -24,8 +24,13 @@ let originZoneWrapper = null;
 // Setup drag-and-drop
 function setupDraggables() {
   document.querySelectorAll('.draggable-wrapper').forEach(item => {
-    item.addEventListener('dragstart', () => {
+    item.addEventListener('dragstart', (e) => {
       draggedItem = item;
+
+      // iPad fix: prevent blown-up image preview
+      const img = new Image();
+      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVR42mP8/w8AAwMCAO75X3wAAAAASUVORK5CYII=';
+      e.dataTransfer.setDragImage(img, 0, 0);
 
       // Store the original drop zone wrapper (if any)
       originZoneWrapper = [...document.querySelectorAll('.drop-zone-wrapper')].find(wrapper =>
@@ -114,6 +119,10 @@ function setupDraggables() {
       document.addEventListener('pointerup', upHandler);
     });
   });
+
+  // (rest of your drop zone listeners remain unchanged)
+}
+
 
   // Drop zones
   document.querySelectorAll('.drop-zone').forEach(zone => {
