@@ -42,6 +42,77 @@ function setupDraggables() {
       draggedItem = null;
       originZoneWrapper = null;
     });
+
+    // Touch support using pointer events
+    item.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'touch') return;
+      e.preventDefault();
+      draggedItem = item;
+      originZoneWrapper = [...document.querySelectorAll('.drop-zone-wrapper')].find(wrapper =>
+        wrapper.querySelector('.drop-zone').contains(draggedItem)
+      );
+
+      const rect = item.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+      item.classList.add('dragging');
+      item.style.left = rect.left + 'px';
+      item.style.top = rect.top + 'px';
+
+      const moveHandler = ev => {
+        item.style.left = (ev.clientX - offsetX) + 'px';
+        item.style.top = (ev.clientY - offsetY) + 'px';
+      };
+
+      const upHandler = ev => {
+        document.removeEventListener('pointermove', moveHandler);
+        document.removeEventListener('pointerup', upHandler);
+
+        const target = document.elementFromPoint(ev.clientX, ev.clientY);
+        const zone = target && target.closest('.drop-zone');
+        const bank = document.getElementById('dragBank');
+
+        if (zone) {
+          const existing = zone.querySelector('.draggable-wrapper');
+          if (existing) {
+            bank.appendChild(existing);
+            restoreDraggable(existing);
+          }
+          zone.appendChild(draggedItem);
+          resizeDraggable(draggedItem, "100%");
+          const internal = draggedItem.querySelector('.label');
+          if (internal) internal.remove();
+          if (originZoneWrapper) {
+            const oldLabel = originZoneWrapper.querySelector('.external-label');
+            if (oldLabel) oldLabel.textContent = "";
+          }
+          const labelSpan = zone.parentElement.querySelector('.external-label');
+          labelSpan.textContent = draggedItem.dataset.label;
+        } else if (bank.contains(target)) {
+          bank.appendChild(draggedItem);
+          restoreDraggable(draggedItem);
+          if (originZoneWrapper) {
+            const label = originZoneWrapper.querySelector('.external-label');
+            if (label) label.textContent = "";
+          }
+          if (!draggedItem.querySelector('.label')) {
+            const label = document.createElement('span');
+            label.classList.add('label');
+            label.textContent = draggedItem.dataset.label;
+            draggedItem.appendChild(label);
+          }
+        }
+
+        item.classList.remove('dragging');
+        item.style.left = '';
+        item.style.top = '';
+        draggedItem = null;
+        originZoneWrapper = null;
+      };
+
+      document.addEventListener('pointermove', moveHandler);
+      document.addEventListener('pointerup', upHandler);
+    });
   });
 
   // Drop zones
