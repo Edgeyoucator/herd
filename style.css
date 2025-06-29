@@ -14,11 +14,30 @@
 }
 
 body {
-  background-color: #162237;
+  margin: 0;
+  padding: 2rem;
   font-family: 'LeBeauneNew', sans-serif;
   color: white;
   text-align: center;
-  padding: 2rem;
+  position: relative;
+  min-height: 100vh;
+  background-image: url('images/background.jpg'); /* replace with your actual path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(22, 34, 55, 0.8); /* #162237 with 80% opacity */
+  z-index: -1;
+  pointer-events: none;
 }
 
 .container {
