@@ -55,7 +55,7 @@ h1 {
   font-family: 'Times New Roman', Times, serif;
   color: #86dabd;
   font-size: 1.1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .drag-bank {
@@ -63,7 +63,7 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 0.1rem;
   min-height: 150px; /* ensures consistent height */
   max-width: 800px;
   margin-left: auto;
@@ -219,3 +219,8 @@ h1 {
 .drop-zone-wrapper:nth-child(6) .drop-zone { margin-top: 20px; }  /* 140px */
 .drop-zone-wrapper:nth-child(7) .drop-zone { margin-top: 10px; }  /* 160px */
 .drop-zone-wrapper:nth-child(8) .drop-zone { margin-top: 0px; }   /* 180px = base */
+
+.check-button {
+  margin-bottom: 1rem; /* NEW: Adds spacing below the button */
+  margin-top: 0.1rem;
+}
